@@ -176,6 +176,13 @@ Wilkinson, L. (2005). The Grammar of Graphics (New York: Springer-Verlag).
 
 Źródło: https://blog.gtwang.org/
 
+## Dane
+
+```{r, echo=FALSE,warning=FALSE}
+kable(head(iris))
+```
+
+
 ## Atrybuty wizualne 
 
 Atrybuty wizualne (aesthetics): mapowanie danych do osi, kolorów, kształtów.
@@ -245,26 +252,6 @@ ggplot(iris, aes(x = Species, y = Sepal.Length)) +
   stat_summary(fun.y = "mean", geom = "bar")
 ```
 
-## Geometrie
-
-```{r, echo=FALSE,warning=FALSE}
-ggplot(iris, aes(x = 1, y = Sepal.Length, fill = Species)) +
-  stat_summary(fun.y = "mean", geom = "bar", position = "dodge") +
-  scale_x_continuous("") +
-  theme(axis.text.x = element_blank())
-```
-
-Orientacja obiektów geometrycznych wzgledem siebie też jest istotna.
-
-## Geometrie
-
-```{r, echo=FALSE,warning=FALSE}
-ggplot(iris, aes(x = 1, y = Sepal.Length, fill = Species)) +
-  stat_summary(fun.y = "mean", geom = "bar", position = "stack") +
-  scale_x_continuous("") +
-  theme(axis.text.x = element_blank())
-```
-
 ## Fasety
 
 ```{r, echo=FALSE,warning=FALSE}
@@ -282,7 +269,7 @@ Dzielenie wykresu na podwykresy w zależności od poziomu zmiennej dyskretnej.
 ## Fasety
 
 ```{r, echo=FALSE,warning=FALSE}
-ggplot(iris, aes(x = Sepal.Length)) +
+p1 <- ggplot(iris, aes(x = Sepal.Length)) +
   geom_density() +
   facet_wrap(~ Species)
 ```
@@ -292,8 +279,14 @@ ggplot(iris, aes(x = Sepal.Length)) +
 Wykres poprzedni bez fasetowania.
 
 ```{r, echo=FALSE,warning=FALSE}
-ggplot(iris, aes(x = Sepal.Length, fill = Species)) +
+p2 <- ggplot(iris, aes(x = Sepal.Length, fill = Species)) +
   geom_density(alpha = 0.7)
+```
+
+## Fasety
+
+```{r, echo=FALSE,warning=FALSE}
+p1/p2
 ```
 
 ## Statystyki
