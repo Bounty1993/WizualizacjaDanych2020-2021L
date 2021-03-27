@@ -92,4 +92,4 @@ ggplot(dat, aes(x = price, fill = cut)) +
   geom_histogram() 
 ```
 
-Pokazać rozkład cen w zależności od cięcia.
+Cel: pokazać rozkład cen diamentów w zależności od cięcia.
