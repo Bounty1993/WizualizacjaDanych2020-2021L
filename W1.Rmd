@@ -49,9 +49,9 @@ Michał Burdukiewicz:
  - Stowarzyszenie Wrocławskich Użytkowników R (stwur.pl),
  - Fundacja Why R? (whyr.pl).
 
-Materiały: https://github.com/michbur/WizualizacjaDanych2020-2021Z
+Materiały: https://github.com/michbur/WizualizacjaDanych2020-2021L
 
-Riseup: https://pad.riseup.net/p/BI4nhcKXPOTw_8Rswkbf-tmp
+Riseup: https://pad.riseup.net/p/WWD-tmp
 
 Mail: michalburdukiewicz@gmail.com
 
@@ -67,6 +67,15 @@ Mail: michalburdukiewicz@gmail.com
 2. Gramatyka grafiki.
 3. Błędy w wizualizacjach danych.
 4. Narzędzia do wizualizacji danych.
+5. Efektywne projektowanie dashboardów.
+6. Zaaawansowane wizualizacje danych.
+
+## Plan spotkań
+
+1. **Czym są wizualizacje danych?**
+2. **Gramatyka grafiki.**
+3. **Błędy w wizualizacjach danych.**
+4. **Narzędzia do wizualizacji danych.**
 5. Efektywne projektowanie dashboardów.
 6. Zaaawansowane wizualizacje danych.
 
@@ -349,15 +358,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, fill = Species)) +
 
 ```{r, echo=FALSE,warning=FALSE}
 ggplot(iris, aes(x = Species)) +
-  geom_bar() 
-```
-
-## Koordynaty
-
-```{r, echo=FALSE,warning=FALSE}
-ggplot(iris, aes(x = Species)) +
-  geom_bar() +
-  coord_flip()
+  geom_bar()
 ```
 
 ## Koordynaty
@@ -458,6 +459,7 @@ Elementy graficzne nawiązujące do treści wzmacniają przekaz i pozwalają lep
 ```{r}
 set.seed(15390)
 dat <- droplevels(diamonds[sample(1L:nrow(diamonds), 100), ])
+kable(dat[1L:2, c("cut", "clarity", "color", "carat", "price")])
 ```
 
  - **cut**: cięcie
@@ -465,55 +467,6 @@ dat <- droplevels(diamonds[sample(1L:nrow(diamonds), 100), ])
  - **color**: kolor
  - **carat**: waga (w karatach)
  - **price**: cena (USD)
- 
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = cut, y = price)) +
-  geom_boxplot(outlier.color = NA) +
-  geom_point(position = "jitter") 
-```
-
-## Przykłady
-
-```{r}
-group_by(dat, cut, clarity) %>% 
-  summarise(count = length(price)) %>% 
-  ggplot(aes(x = cut, y = clarity, fill = count)) +
-  geom_tile(color = "black") +
-  scale_fill_gradient(low = "white", high = "black")
-```
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = carat, y = price, shape = clarity)) +
-  geom_point()
-```
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = carat, y = price, shape = cut)) +
-  geom_point() +
-  facet_wrap(~ clarity, labeller = label_both) 
-```
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = color)) +
-  geom_bar() +
-  facet_grid(cut ~ clarity, labeller = label_both) 
-```
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = price)) +
-  geom_histogram() +
-  facet_wrap(~ cut)
-```
 
 # Błędy w wizualizacjach 
 
@@ -621,56 +574,6 @@ Nadmiar stylizacji wykresu może zmniejszać czytelność wykresu.
 ## Prostota
 
 <a href="https://www.visualcapitalist.com/wp-content/uploads/2020/03/DeadliestPandemics-Infographic-87.jpg"><img src="https://www.visualcapitalist.com/wp-content/uploads/2020/03/DeadliestPandemics-Infographic-87.jpg" width="700px"></a>
-
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = cut, y = price)) +
-  geom_boxplot(outlier.color = NA) +
-  geom_point(position = "jitter") 
-```
-
-## Przykłady
-
-```{r}
-group_by(dat, cut, clarity) %>% 
-  summarise(count = length(price)) %>% 
-  ggplot(aes(x = cut, y = clarity, fill = count)) +
-  geom_tile(color = "black") +
-  scale_fill_gradient(low = "white", high = "black")
-```
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = carat, y = price, shape = clarity)) +
-  geom_point()
-```
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = carat, y = price, shape = cut)) +
-  geom_point() +
-  facet_wrap(~ clarity, labeller = label_both) 
-```
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = color)) +
-  geom_bar() +
-  facet_grid(cut ~ clarity, labeller = label_both) 
-```
-
-## Przykłady
-
-```{r}
-ggplot(dat, aes(x = price)) +
-  geom_histogram() +
-  facet_wrap(~ cut)
-```
 
 # Narzędzia do wizualizacji
 
