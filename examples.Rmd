@@ -1,7 +1,7 @@
 ---
 title: "Przykłady"
 author: "Michał Burdukiewicz"
-output: pdf_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -9,6 +9,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(dplyr)
 library(ggplot2)
 library(ggthemes)
+library(rayshader)
 theme_set(theme_bw())
 ```
 
@@ -17,7 +18,7 @@ set.seed(15390)
 dat <- droplevels(diamonds[sample(1L:nrow(diamonds), 100), ])
 ```
 
-\newpage
+
 
 ## Rysunek 1
 
@@ -27,7 +28,9 @@ ggplot(dat, aes(x = cut, y = price)) +
   geom_point(position = "jitter") 
 ```
 
-\newpage
+Cel: pokazanie zależności ceny od cięcia.
+
+
 
 ## Rysunek 2
 
@@ -39,7 +42,9 @@ group_by(dat, cut, clarity) %>%
   scale_fill_gradient(low = "white", high = "black")
 ```
 
-\newpage
+Cel: pokazanie liczby diamentów w zależności od cięcia i czystości.
+
+
 
 ## Rysunek 3
 
@@ -48,17 +53,25 @@ ggplot(dat, aes(x = carat, y = price, shape = clarity)) +
   geom_point()
 ```
 
-\newpage
+Cel: pokazanie zależności ceny od liczby karatów i czystości.
+
+
 
 ## Rysunek 4
 
 ```{r}
-ggplot(dat, aes(x = carat, y = price, shape = cut)) +
-  geom_point() +
-  facet_wrap(~ clarity, labeller = label_both) 
+p <- ggplot(dat, aes(x = carat, y = price)) +
+  stat_density2d(aes(fill = ..level..), geom = "polygon")
+
+plot_gg(p, width = 3, height = 3)
+rgl::rglwidget()
+rgl::rgl.close()
 ```
 
-\newpage
+Cel: pokazać zależność ceny od liczby karatów.
+
+
+
 
 ## Rysunek 5
 
@@ -67,12 +80,16 @@ ggplot(dat, aes(x = color)) +
   geom_bar() +
   facet_grid(cut ~ clarity, labeller = label_both) 
 ```
-\newpage
+
+Cel: pokazać liczbę diamentów w określonym kolorze, cięciu i czystości.
+
+
 
 ## Rysunek 6
 
 ```{r}
-ggplot(dat, aes(x = price)) +
-  geom_histogram() +
-  facet_wrap(~ cut, labeller = label_both)
+ggplot(dat, aes(x = price, fill = cut)) +
+  geom_histogram() 
 ```
+
+Pokazać rozkład cen w zależności od cięcia.
